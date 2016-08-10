@@ -1,19 +1,22 @@
-package com.epam.katowice.integration.entity;
+package application.integration.dbsakila.entity;
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Actor entity.
+ * ActorEntity entity.
  *
  * Created by Adam_Skowron on 08.08.2016.
  */
 @Entity
-public class Actor {
+public class ActorEntity {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
     @Column(name = "first_name")
@@ -55,5 +58,15 @@ public class Actor {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "ActorEntity{" +
+               "id=" + id +
+               ", firstname='" + firstname + '\'' +
+               ", lastname='" + lastname + '\'' +
+               ", lastUpdate=" + lastUpdate +
+               '}';
     }
 }

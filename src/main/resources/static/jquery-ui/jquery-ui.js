@@ -9945,7 +9945,7 @@ $.extend(Datepicker.prototype, {
 			(!maxYear || date.getFullYear() <= maxYear));
 	},
 
-	/* Provide the configuration settings for formatting/parsing. */
+	/* Provide the application.configuration settings for formatting/parsing. */
 	_getFormatConfig: function(inst) {
 		var shortYearCutoff = this._get(inst, "shortYearCutoff");
 		shortYearCutoff = (typeof shortYearCutoff !== "string" ? shortYearCutoff :
@@ -14167,7 +14167,7 @@ var tooltip = $.widget( "ui.tooltip", {
 
 		// close open tooltips
 		$.each( this.tooltips, function( id, tooltipData ) {
-			// Delegate to close method to handle common cleanup
+			// Delegate to close method to handle application.common cleanup
 			var event = $.Event( "blur" ),
 				element = tooltipData.element;
 			event.target = event.currentTarget = element[ 0 ];
@@ -15108,7 +15108,7 @@ $.extend( $.effects, {
 				// http://bugs.jquery.com/ticket/9917
 				// jQuery 1.6.2 incorrectly returns undefined for any falsy value.
 				// We can't differentiate between "" and 0 here, so we just assume
-				// empty string since it's likely to be a more common value...
+				// empty string since it's likely to be a more application.common value...
 				if ( val === undefined ) {
 					val = "";
 				}

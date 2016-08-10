@@ -69,7 +69,7 @@
 	 *    } );
 	 *
 	 *  @example
-	 *    // Initialisation with configuration options - in this case, disable
+	 *    // Initialisation with application.configuration options - in this case, disable
 	 *    // pagination and sorting.
 	 *    $(document).ready( function {
 	 *      $('#example').dataTable( {
@@ -866,7 +866,7 @@
 	/**
 	 * Take the column definitions and static columns arrays and calculate how
 	 * they relate to column indexes. The callback function will then apply the
-	 * definition found for a column to a suitable configuration object.
+	 * definition found for a column to a suitable application.configuration object.
 	 *  @param {object} oSettings dataTables settings object
 	 *  @param {array} aoColDefs The aoColumnDefs array that is to be applied
 	 *  @param {array} aoCols The aoColumns array that defines columns individually
@@ -5913,7 +5913,7 @@
 		
 		
 		/**
-		 * Provide a common method for plug-ins to check the version of DataTables being used, in order
+		 * Provide a application.common method for plug-ins to check the version of DataTables being used, in order
 		 * to ensure compatibility.
 		 *  @param {string} sVersion Version string to check for, in the format "X.Y.Z". Note that the
 		 *    formats "X" and "X.Y" are also acceptable.
@@ -6545,7 +6545,7 @@
 	 * array depend upon the actions requested by each method (for example
 	 * `rows().nodes()` will return an array of nodes, while `rows().data()` will
 	 * return an array of objects or arrays depending upon your table's
-	 * configuration). The API object has a number of array like methods (`push`,
+	 * application.configuration). The API object has a number of array like methods (`push`,
 	 * `pop`, `reverse` etc) as well as additional helper methods (`each`, `pluck`,
 	 * `unique` etc) to assist your working with the data held in a table.
 	 *
@@ -8619,7 +8619,7 @@
 	
 	
 	/**
-	 * Provide a common method for plug-ins to check the version of DataTables being
+	 * Provide a application.common method for plug-ins to check the version of DataTables being
 	 * used, in order to ensure compatibility.
 	 *
 	 *  @param {string} version Version string to check for, in the format "X.Y.Z".
@@ -8910,7 +8910,7 @@
 	/**
 	 * Object models container, for the various models that DataTables has
 	 * available to it. These models define the objects that are used to hold
-	 * the active state and configuration of the table.
+	 * the active state and application.configuration of the table.
 	 *  @namespace
 	 */
 	DataTable.models = {};
@@ -9054,7 +9054,7 @@
 	 *
 	 * Note that this object is related to {@link DataTable.defaults.column}
 	 * but this one is the internal data store for DataTables's cache of columns.
-	 * It should NOT be manipulated outside of DataTables. Any configuration should
+	 * It should NOT be manipulated outside of DataTables. Any application.configuration should
 	 * be done through the initialisation options.
 	 *  @namespace
 	 */
@@ -11453,7 +11453,7 @@
 		 * DataTables makes use of renderers when displaying HTML elements for
 		 * a table. These renderers can be added or modified by plug-ins to
 		 * generate suitable mark-up for a site. For example the Bootstrap
-		 * integration plug-in for DataTables uses a paging button renderer to
+		 * application.integration plug-in for DataTables uses a paging button renderer to
 		 * display pagination buttons in the mark-up required by Bootstrap.
 		 *
 		 * For further information about the renderers available see
@@ -12338,7 +12338,7 @@
 	
 	/**
 	 * DataTables settings object - this holds all the information needed for a
-	 * given table, including configuration, data and current application of the
+	 * given table, including application.configuration, data and current application of the
 	 * table options. DataTables does not have a single instance for each DataTable
 	 * with the settings attached to that instance, but rather instances of the
 	 * DataTable "class" are created on-the-fly as needed (typically by a
@@ -12347,7 +12347,7 @@
 	 *
 	 * Note that this object is related to {@link DataTable.defaults} but this
 	 * one is the internal data store for DataTables's cache of columns. It should
-	 * NOT be manipulated outside of DataTables. Any configuration should be done
+	 * NOT be manipulated outside of DataTables. Any application.configuration should be done
 	 * through the initialisation options.
 	 *  @namespace
 	 *  @todo Really should attach the settings object to individual instances so we
@@ -13374,7 +13374,7 @@
 	
 	
 		/**
-		 * Legacy configuration options. Enable and disable legacy options that
+		 * Legacy application.configuration options. Enable and disable legacy options that
 		 * are available in DataTables.
 		 *
 		 *  @type object
