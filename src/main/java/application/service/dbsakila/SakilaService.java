@@ -24,11 +24,4 @@ public interface SakilaService {
      * @return list of movies
      */
     List<Film> getMovies();
-
-    /**
-     * Fetch all Movies
-     *
-     * @return list of movies
-     */
-    List<Film> getMovies2();
 }

@@ -2,10 +2,7 @@ package application.service.dbsakila;
 
 import application.common.domain.Film;
 import application.integration.dbsakila.dao.FilmRepository;
-import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.mapper.FilmMapper;
-import application.integration.dbsakila.mapper.FilmMapperMapStruct;
-import fr.xebia.extras.selma.Selma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,20 +31,10 @@ public class SakilaServiceImpl implements SakilaService {
 
     @Override
     public List<Film> getMovies() {
-        FilmMapper filmMapper = Selma.builder(FilmMapper.class).build();
         return filmRepository
             .findAll()
             .stream()
-            .map(filmMapper::toFilm)
-            .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Film> getMovies2() {
-        return filmRepository
-            .findAll()
-            .stream()
-            .map(FilmMapperMapStruct.INSTANCE::FilmEntityToFilm)
+            .map(FilmMapper.INSTANCE::FilmEntityToFilm)
             .collect(Collectors.toList());
     }
 }

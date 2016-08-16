@@ -5,16 +5,15 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 import application.MoviesRentalTest;
 import application.common.domain.Film;
+import application.common.types.Rating;
 import application.integration.dbsakila.dao.FilmRepository;
 import application.integration.dbsakila.entity.FilmEntity;
-import org.assertj.core.util.Compatibility;
+import application.integration.dbsakila.entity.builder.FilmEntityBuilder;
 import org.powermock.api.mockito.PowerMockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +23,7 @@ import java.util.List;
  */
 public class SakilaServiceImplTest extends MoviesRentalTest {
 
-    //private FilmRepository filmRepository = PowerMockito.mock(FilmRepository.class);
-
-    @Autowired
-    private FilmRepository filmRepository;
+    private FilmRepository filmRepository = PowerMockito.mock(FilmRepository.class);
 
     private SakilaService sakilaService;
 
@@ -36,54 +32,36 @@ public class SakilaServiceImplTest extends MoviesRentalTest {
         sakilaService = new SakilaServiceImpl(filmRepository);
     }
 
-//    @Test
-//    public void testGetMoviesCount() throws Exception {
-//        when(filmRepository.count()).thenReturn(2L);
-//        assertThat(sakilaService.getMoviesCount()).isEqualTo(2L);
-//    }
-
-
-
     @Test
-    public void testGetMovies2() throws Exception {
-
-        System.out.println("#Count: "+this.sakilaService.getMoviesCount());
-
-        long start = System.nanoTime();
-        for(int i = 0; i < 100; i++) {
-            List<Film> films = this.sakilaService.getMovies2();
-        }
-
-        System.out.println("Sum: "+((System.nanoTime()-start)/10E-9));
+    public void testGetMoviesCount() throws Exception {
+        when(filmRepository.count()).thenReturn(2L);
+        assertThat(sakilaService.getMoviesCount()).isEqualTo(2L);
     }
 
     @Test
     public void testGetMovies() throws Exception {
+        when(filmRepository.findAll()).thenReturn(this.findAll());
 
-        System.out.println("#Count: "+this.sakilaService.getMoviesCount());
-
-        long start = System.nanoTime();
-        for(int i = 0; i < 100; i++) {
-            List<Film> films = this.sakilaService.getMovies();
-        }
-
-        System.out.println("Sum: "+((System.nanoTime()-start)/10E-9));
+        assertThat(sakilaService.getMovies()).isNotEmpty().first().isInstanceOf(Film.class);
+        assertThat(sakilaService.getMovies()).size().isEqualTo(5);
+        assertThat(sakilaService.getMovies()).filteredOn("rating", Rating.PG13).size().isEqualTo(1);
+        assertThat(sakilaService.getMovies()).filteredOn("rating", Rating.R).size().isEqualTo(4);
     }
 
-//    @DataProvider
-//    public Object[][] provider() {
-//
-//        int numberOfEntities = 10000;
-//
-//        final Object[][] data = new FilmEntity[numberOfEntities][1];
-//        for (int i = 0; i < 5; i++) {
-//            data[i][0] = new FilmEntity(r.nextInt(5), i, "test string");
-//        }
-//
-//
-//    }
+    private List<FilmEntity> findAll() {
+        List<FilmEntity> filmEntities = new ArrayList<>();
 
+        FilmEntityBuilder filmEntityBuilder = FilmEntityBuilder.aFilmEntity().withId(1L).withTitle("AAA").withRating(
+            Rating.R).withLength(100).withDescription("description");
 
+        filmEntities.add(filmEntityBuilder.build());
+        filmEntities.add(filmEntityBuilder.but().withId(2L).withTitle("BBB").build());
+        filmEntities.add(filmEntityBuilder.but().withId(3L).withTitle("CCC").build());
+        filmEntities.add(filmEntityBuilder.but().withId(4L).withTitle("DDD").withLength(92).build());
+        filmEntities.add(filmEntityBuilder.but().withId(5L).withTitle("EEE").withRating(Rating.PG13).build());
+
+        return filmEntities;
+    }
 
 
 }

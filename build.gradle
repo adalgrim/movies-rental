@@ -44,8 +44,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
-	compile('fr.xebia.extras:selma:0.15')
-    compile('fr.xebia.extras:selma-processor:0.15')
     compile('org.mapstruct:mapstruct-jdk8:1.1.0.Beta2')
     runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')

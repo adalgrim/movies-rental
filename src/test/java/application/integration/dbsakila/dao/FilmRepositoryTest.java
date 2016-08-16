@@ -4,10 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import application.MoviesRentalTest;
 import application.integration.dbsakila.entity.FilmEntity;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 /**
  * FilmRepositoryTest.
@@ -36,6 +37,13 @@ public class FilmRepositoryTest extends MoviesRentalTest {
     public void testGetMoviesCount() throws Exception {
         long moviesCount = filmRepository.count();
         assertThat(moviesCount).isEqualTo(2);
+    }
+
+    @Test
+    public void testGetMovies() throws Exception {
+        List<FilmEntity> filmEntityList = filmRepository.findAll();
+        assertThat(filmEntityList).isNotEmpty().size().isEqualTo(2);
+        assertThat(filmEntityList).extracting("title").contains("AAA", "BBB").doesNotContain("CCC");
     }
 
 

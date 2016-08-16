@@ -1,23 +1,20 @@
 package application.integration.dbsakila.mapper;
 
-import static fr.xebia.extras.selma.CollectionMappingStrategy.ALLOW_GETTER;
-
 import application.common.domain.Film;
 import application.integration.dbsakila.entity.FilmEntity;
-import fr.xebia.extras.selma.IgnoreMissing;
-import fr.xebia.extras.selma.Mapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 /**
- * Film mapper.
- *
+ * FilmMapper
  * Created by Adam_Skowron on 10.08.2016.
  */
-@Mapper(withIgnoreMissing = IgnoreMissing.ALL, withCollectionStrategy = ALLOW_GETTER)
+@Mapper
 public interface FilmMapper {
 
-    /** Map FilmEntity to Film DTO **/
-    Film toFilm(FilmEntity filmEntity);
+    FilmMapper INSTANCE = Mappers.getMapper(FilmMapper.class);
 
-    /** Map Film DTO to FilmEntity **/
-    FilmEntity toFilmEntity(Film film);
+    Film FilmEntityToFilm(FilmEntity filmEntity);
+
+    FilmEntity FilmToFilmEntity(Film film);
 }
