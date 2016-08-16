@@ -1,8 +1,13 @@
 package application.service.dbsakila;
 
+import application.common.domain.Film;
 import application.integration.dbsakila.dao.FilmRepository;
+import application.integration.dbsakila.mapper.FilmMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Sakila Service Impl.
@@ -22,5 +27,14 @@ public class SakilaServiceImpl implements SakilaService {
     @Override
     public long getMoviesCount() {
         return filmRepository.count();
+    }
+
+    @Override
+    public List<Film> getMovies() {
+        return filmRepository
+            .findAll()
+            .stream()
+            .map(FilmMapper.INSTANCE::FilmEntityToFilm)
+            .collect(Collectors.toList());
     }
 }

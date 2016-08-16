@@ -2,6 +2,8 @@ package application.gui.home;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.testng.Assert.*;
 
 import application.MoviesRentalTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- * HomeControllerTest.
- *
- * Created by Adam_Skowron on 10.08.2016.
+ * Created by Adam_Skowron on 16.08.2016.
  */
-public class HomeControllerTest extends MoviesRentalTest {
+public class MovieControllerTest extends MoviesRentalTest {
 
     @Autowired
     private WebApplicationContext webCtx;
@@ -29,13 +29,10 @@ public class HomeControllerTest extends MoviesRentalTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
-        this.mockMvc.perform(get("/")).andExpect(status().isOk());
-    }
-
-    @Test
-    public void testWrongPath() throws Exception {
-        this.mockMvc.perform(get("/fakeAddress")).andExpect(status().isNotFound());
+    public void testMovies() throws Exception {
+        this.mockMvc.perform(get("/movies"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("pages/movieList"));
     }
 
 }

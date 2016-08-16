@@ -1,5 +1,8 @@
 package application.common.domain;
 
+import application.common.types.Rating;
+import application.integration.dbsakila.entity.FilmEntity;
+
 /**
  * Film DO.
  *
@@ -12,6 +15,12 @@ public class Film {
     private String title;
 
     private String description;
+
+    private int releaseYear;
+
+    private int length;
+
+    private Rating rating;
 
     public long getId() {
         return id;
@@ -32,5 +41,30 @@ public class Film {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
 
 }

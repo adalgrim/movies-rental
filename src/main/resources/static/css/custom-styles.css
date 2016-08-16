@@ -1,2 +1,26 @@
 header{position:fixed;left:0;top:0;z-index:1002;height:60px;width:100%;min-width:320px}
 header .uui-header .brand-logo .logo img { vertical-align: top; width: auto; height: 34px; }
+
+@media only screen and (min-width : 481px) {
+   .flex-row.row {
+	 display: flex;
+	 flex-wrap: wrap;
+   }
+   .flex-row.row > [class*='col-'] {
+	 display: flex;
+	 flex-direction: column;
+   }
+  .flex-row.row:after,
+  .flex-row.row:before {
+	 display: flex;
+  }
+}
+
+.thumbnail {
+    display: block; padding: 5px;
+    margin-bottom: 20px;
+    border: solid #ddd 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}

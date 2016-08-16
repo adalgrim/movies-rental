@@ -1,5 +1,9 @@
 package application.service.dbsakila;
 
+import application.common.domain.Film;
+
+import java.util.List;
+
 /**
  * SakilaService interface.
  *
@@ -12,6 +16,12 @@ public interface SakilaService {
      *
      * @return long number of movies in database
      */
-    public long getMoviesCount();
+    long getMoviesCount();
 
+    /**
+     * Fetch all Movies
+     *
+     * @return list of movies
+     */
+    List<Film> getMovies();
 }
