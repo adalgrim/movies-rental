@@ -4,6 +4,8 @@ import application.common.domain.Film;
 import application.integration.dbsakila.dao.FilmRepository;
 import application.integration.dbsakila.mapper.FilmMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,11 +32,23 @@ public class SakilaServiceImpl implements SakilaService {
     }
 
     @Override
+    public Page<Film> getMovies(Pageable pageable) {
+        return filmRepository
+            .findAll(pageable)
+            .map(FilmMapper.INSTANCE::FilmEntityToFilm);
+    }
+
+    @Override
     public List<Film> getMovies() {
         return filmRepository
             .findAll()
             .stream()
             .map(FilmMapper.INSTANCE::FilmEntityToFilm)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveFilm(Film film) {
+        filmRepository.save(FilmMapper.INSTANCE.FilmToFilmEntity(film));
     }
 }

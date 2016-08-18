@@ -3,24 +3,43 @@ header .uui-header .brand-logo .logo img { vertical-align: top; width: auto; hei
 
 @media only screen and (min-width : 481px) {
    .flex-row.row {
-	 display: flex;
-	 flex-wrap: wrap;
+	 display: -webkit-flex;
+     display: -ms-flexbox;
+     display: flex;
+
+     -webkit-flex-wrap: wrap;
+     -ms-flex-wrap: wrap;
+     flex-wrap: wrap;
    }
    .flex-row.row > [class*='col-'] {
-	 display: flex;
+	 display: -webkit-flex;
+     display: -ms-flexbox;
+     display: flex;
 	 flex-direction: column;
    }
   .flex-row.row:after,
   .flex-row.row:before {
-	 display: flex;
+	 display: -webkit-flex;
+     display: -ms-flexbox;
+     display: flex;
   }
 }
 
 .thumbnail {
-    display: block; padding: 5px;
+    display: block;
+    padding: 20px;
     margin-bottom: 20px;
     border: solid #ddd 1px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    height: 100%;
+}
+
+.uui-pagination { text-align: center; margin-bottom: 30px; }
+
+.wrapper { margin-bottom: -60px; }
+.wrapper:after {
+  content: "";
+  display: block;
+}
+footer, .wrapper:after {
+  height: 60px;
 }

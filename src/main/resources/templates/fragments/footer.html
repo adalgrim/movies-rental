@@ -4,15 +4,15 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
-<div th:fragment="footer">
-    <div class="uui-footer">
-        <div class="footer-logo-copyright">
-            <div class="epam-logo">
-                <img src="/images/Logo_Epam_Color.svg" alt=""/>
-            </div>
-            <p class="copyright">&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Best Movies Rental</p>
+
+<div class="uui-footer" th:fragment="footer">
+    <div class="footer-logo-copyright">
+        <div class="epam-logo">
+            <img src="/images/Logo_Epam_Color.svg" alt=""/>
         </div>
+        <p class="copyright">&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Best Movies Rental</p>
     </div>
 </div>
+
 </body>
 </html>

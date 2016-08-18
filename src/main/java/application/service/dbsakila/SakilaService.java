@@ -1,6 +1,8 @@
 package application.service.dbsakila;
 
 import application.common.domain.Film;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,9 +21,23 @@ public interface SakilaService {
     long getMoviesCount();
 
     /**
-     * Fetch all Movies
+     * Fetch all Movies with pages
+     *
+     * @return page object
+     */
+    Page<Film> getMovies(Pageable pageable);
+
+    /**
+     * Fetch all Movies without page
      *
      * @return list of movies
      */
     List<Film> getMovies();
+
+    /**
+     * Save Film
+     *
+     * @param film
+     */
+    void saveFilm(Film film);
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<!-- Pagination Bar -->
+<ul class="uui-pagination" th:fragment="pagination">
+    <li class="actions-wrapper">
+        <ul class="pagination-items">
+            <li th:class="${page.firstPage}? 'first-page disable' : 'first-page'">
+                <a th:if="${page.firstPage}">First</a>
+                <a th:if="${not page.firstPage}" th:href="@{${page.url}(page=1)}">First</a>
+            </li>
+            <li th:class="${page.hasPreviousPage}? 'prev-page' : 'prev-page disable'">
+                <a th:if="${not page.hasPreviousPage}"><i class="fa fa-angle-left"></i></a>
+                <a th:if="${page.hasPreviousPage}" th:href="@{${page.url}(page=${page.number-1})}">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="pages-wrapper">
+        <ul class="pagination-items">
+            <li th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+                <a th:href="@{${page.url}(page=${item.number})}" th:text="${item.number}"></a>
+            </li>
+        </ul>
+    </li>
+    <li class="actions-wrapper">
+        <ul class="pagination-items">
+            <li th:class="${page.hasNextPage}? 'next-page' : 'next-page disable'">
+                <a th:if="${not page.hasNextPage}"><i class="fa fa-angle-right"></i></a>
+                <a th:if="${page.hasNextPage}" th:href="@{${page.url}(page=${page.number+1})}">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li th:class="${page.lastPage}? 'last-page disable' : 'last-page'">
+                <a th:if="${page.lastPage}">Last</a>
+                <a th:if="${not page.lastPage}" th:href="@{${page.url}(page=${page.totalPages})}">Last</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+
+</body>
+</html>
+

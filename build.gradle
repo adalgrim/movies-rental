@@ -45,6 +45,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.mapstruct:mapstruct-jdk8:1.1.0.Beta2')
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile("org.springframework:spring-web")
     runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.assertj:assertj-core:3.5.2');

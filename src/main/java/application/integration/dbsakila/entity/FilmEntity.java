@@ -38,6 +38,8 @@ public class FilmEntity {
     @Convert(converter=RatingConverter.class)
     private Rating rating;
 
+    private String poster;
+
     public long getId() {
         return id;
     }
@@ -86,6 +88,14 @@ public class FilmEntity {
         this.rating = rating;
     }
 
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
     @Override
     public String toString() {
         return "FilmEntity{" +
@@ -94,7 +104,4 @@ public class FilmEntity {
                ", description='" + description + '\'' +
                '}';
     }
-
-
-
 }
