@@ -43,3 +43,5 @@ header .uui-header .brand-logo .logo img { vertical-align: top; width: auto; hei
 footer, .wrapper:after {
   height: 60px;
 }
+
+.poster { width: 110px; float:left; padding-right: 15px; }
