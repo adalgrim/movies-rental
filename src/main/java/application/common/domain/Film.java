@@ -22,6 +22,12 @@ public class Film {
 
     private Rating rating;
 
+    private String poster;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }
@@ -66,5 +72,11 @@ public class Film {
         this.rating = rating;
     }
 
+    public String getPoster() {
+        return poster;
+    }
 
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 }

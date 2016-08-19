@@ -1,5 +1,6 @@
 package application.service.dbsakila;
 
+import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -10,6 +11,10 @@ import application.integration.dbsakila.dao.FilmRepository;
 import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.entity.builder.FilmEntityBuilder;
 import org.powermock.api.mockito.PowerMockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -40,15 +45,17 @@ public class SakilaServiceImplTest extends MoviesRentalTest {
 
     @Test
     public void testGetMovies() throws Exception {
-        when(filmRepository.findAll()).thenReturn(this.findAll());
 
-        assertThat(sakilaService.getMovies()).isNotEmpty().first().isInstanceOf(Film.class);
-        assertThat(sakilaService.getMovies()).size().isEqualTo(5);
-        assertThat(sakilaService.getMovies()).filteredOn("rating", Rating.PG13).size().isEqualTo(1);
-        assertThat(sakilaService.getMovies()).filteredOn("rating", Rating.R).size().isEqualTo(4);
+        PageRequest pageRequest = new PageRequest(0, 20);
+
+        when(filmRepository.findAll(pageRequest)).thenReturn(this.findAllAsPage());
+        assertThat(sakilaService.getMovies(pageRequest)).isNotEmpty().first().isInstanceOf(Film.class);
+        assertThat(sakilaService.getMovies(pageRequest)).size().isEqualTo(5);
+        assertThat(sakilaService.getMovies(pageRequest)).filteredOn("rating", Rating.PG13).size().isEqualTo(1);
+        assertThat(sakilaService.getMovies(pageRequest)).filteredOn("rating", Rating.R).size().isEqualTo(4);
     }
 
-    private List<FilmEntity> findAll() {
+    private Page<FilmEntity> findAllAsPage() {
         List<FilmEntity> filmEntities = new ArrayList<>();
 
         FilmEntityBuilder filmEntityBuilder = FilmEntityBuilder.aFilmEntity().withId(1L).withTitle("AAA").withRating(
@@ -60,7 +67,7 @@ public class SakilaServiceImplTest extends MoviesRentalTest {
         filmEntities.add(filmEntityBuilder.but().withId(4L).withTitle("DDD").withLength(92).build());
         filmEntities.add(filmEntityBuilder.but().withId(5L).withTitle("EEE").withRating(Rating.PG13).build());
 
-        return filmEntities;
+        return new PageImpl<FilmEntity>(filmEntities);
     }
 
 

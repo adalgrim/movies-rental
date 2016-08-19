@@ -4,4 +4,5 @@
 
 $(document).ready(function () {
     UUI.Sidebar.init({ open: true });
+    $('.selectpicker').selectpicker();
 });
