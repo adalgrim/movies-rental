@@ -3,6 +3,9 @@ package application.integration.dbsakila.entity;
 import application.common.types.Rating;
 import application.integration.dbsakila.converter.RatingConverter;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -10,6 +13,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +47,22 @@ public class FilmEntity {
     private Rating rating;
 
     private String poster;
+
+    @ManyToOne
+    @JoinColumn(name = "language_id")
+    private LanguageEntity language;
+
+    @ManyToMany
+    @JoinTable(name = "film_category",
+        joinColumns = { @JoinColumn(name = "film_id") },
+    inverseJoinColumns = { @JoinColumn(name = "category_id") })
+    private Set<CategoryEntity> categories;
+
+    @ManyToMany
+    @JoinTable(name = "film_actor",
+        joinColumns = { @JoinColumn(name = "film_id") },
+        inverseJoinColumns = { @JoinColumn(name = "actor_id") })
+    private Set<ActorEntity> actors;
 
     public long getId() {
         return id;
@@ -103,5 +127,29 @@ public class FilmEntity {
                ", title='" + title + '\'' +
                ", description='" + description + '\'' +
                '}';
+    }
+
+    public LanguageEntity getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(LanguageEntity language) {
+        this.language = language;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
+    }
+
+    public Set<ActorEntity> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<ActorEntity> actors) {
+        this.actors = actors;
     }
 }

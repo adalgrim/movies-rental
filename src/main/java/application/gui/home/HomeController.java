@@ -4,7 +4,7 @@ package application.gui.home;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.RequestMapping;
-    import application.service.dbsakila.SakilaService;
+    import application.service.dbsakila.MovieService;
 
 /**
  * RestController of Movies Rental.
@@ -14,16 +14,16 @@ package application.gui.home;
 @Controller
 public class HomeController {
 
-    private SakilaService sakilaService;
+    private MovieService movieService;
 
     @Autowired
-    public HomeController(SakilaService sakilaService) {
-        this.sakilaService = sakilaService;
+    public HomeController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
     @RequestMapping("/")
     String index(Model model) {
-        model.addAttribute("moviesCount", sakilaService.getMoviesCount());
+        model.addAttribute("moviesCount", movieService.getMoviesCount());
         return "pages/home";
     }
 

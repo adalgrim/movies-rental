@@ -1,17 +1,22 @@
 package application.common.domain;
 
 import application.common.types.Rating;
-import application.integration.dbsakila.entity.FilmEntity;
-
-import java.util.List;
-import java.util.Set;
 
 /**
- * Film DO.
- *
- * Created by Adam_Skowron on 09.08.2016.
+ * Created by Adam_Skowron on 23.08.2016.
  */
-public class Film {
+public class FilmSearchResult {
+
+    public FilmSearchResult(long id, String title, String description, int releaseYear, int length,
+                            Rating rating, String poster) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.length = length;
+        this.rating = rating;
+        this.poster = poster;
+    }
 
     private long id;
 
@@ -27,18 +32,12 @@ public class Film {
 
     private String poster;
 
-    private Language language;
-
-    private Set<Category> categories;
-
-    private Set<Actor> actors;
+    public long getId() {
+        return id;
+    }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getTitle() {
@@ -87,29 +86,5 @@ public class Film {
 
     public void setPoster(String poster) {
         this.poster = poster;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public Set<Actor> getActors() {
-        return actors;
-    }
-
-    public void setActors(Set<Actor> actors) {
-        this.actors = actors;
     }
 }

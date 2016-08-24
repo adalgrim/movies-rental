@@ -12,16 +12,78 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <br/>
         <h1>Movie list</h1>
-
-        <form th:action="@{${page.url}(page=1)}" method="get">
-                <label for="sort"> Sort by :</label>
+        <div class="col-lg-12 col-md-12 col-sm-12 no-padding">
+            <form th:action="@{${page.url}(page=1)}" id="searchForm" method="get" th:object="${movieSearchParams}">
+                <table class="table borderless">
+                    <tr>
+                        <td>
+                            <h6>Title</h6>
+                            <input type="text" placeholder="Title" id="title" th:field="*{title}" class="uui-form-element" />
+                        </td>
+                        <td>
+                            <h6>Actor name</h6>
+                            <input type="text" placeholder="Actor name or surname" id="actorName" th:field="*{actorName}" class="uui-form-element" />
+                        </td>
+                        <td>
+                            <h6>Category</h6>
+                            <select id="categoryId" name="categoryId" class="btn-group selectpicker uui-form-element">
+                                <option value="0">any</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:selected="(*{categoryId} == ${category.id})"
+                                        th:text="${category.name}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <h6>Language</h6>
+                            <select id="languageId" name="languageId" class="btn-group selectpicker uui-form-element">
+                                <option value="0">any</option>
+                                <option th:each="language : ${languages}"
+                                        th:value="${language.id}"
+                                        th:selected="(*{languageId} == ${language.id})"
+                                        th:text="${language.name}"></option>
+                            </select>
+                        </td>
+                        <td class="range-cell">
+                            <h6>Release year</h6>
+                            <div class="uui-slider range"></div>
+                            <div class="slider-info">
+                                Year between: <span></span>
+                            </div>
+                            <input type="hidden" th:field="*{yearFrom}" />
+                            <input type="hidden" th:field="*{yearTo}" />
+                            <div class="hide" th:text="${yearMinMax}"></div>
+                        </td>
+                        <td class="range-cell">
+                            <h6>Length</h6>
+                            <div class="uui-slider range"></div>
+                            <div class="slider-info">
+                                Length between: <span></span>
+                            </div>
+                            <input type="hidden" th:field="*{lengthFrom}" />
+                            <input type="hidden" th:field="*{lengthTo}" />
+                            <div class="hide" th:text="${lengthMinMax}"></div>
+                        </td>
+                    </tr>
+                </table>
+                <button class="uui-button blue" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 pull-right text-right">
+            <form th:action="@{${page.url}(page=1)}" method="get">
+                <label for="sort">Sort by :</label>
                 <select id="sort" name="sort" onchange="this.form.submit();" class="btn-group selectpicker uui-form-element">
                     <option th:each="sortItem : ${sortItems}"
                             th:value="${sortItem.key}"
                             th:selected="${#httpServletRequest.getParameter('sort') == sortItem.key}"
                             th:text="${sortItem.value}"></option>
                 </select>
+                <div th:each="entry : ${params}">
+                    <input type="hidden" th:name="${entry.key}" th:value="${entry.value}" />
+                </div><br />
             </form>
+        </div>
+        <div class="clearfix"></div>
         <br />
 
         <div class="flex-row row">
@@ -42,6 +104,26 @@
         <div th:replace="fragments/pagination :: pagination"></div>
 
     </div>
+    <script th:inline="javascript">
+        $('.uui-slider.range').each(
+            function() {
+                var minMax = $(this).siblings('.hide').eq(0).html().split(";");
+                $(this).siblings('.slider-info').find('span').text(parseInt($(this).siblings('input').eq(0).val())
+                + ' - ' + parseInt($(this).siblings('input').eq(1).val()));
+                $(this).slider({
+                    range: true,
+                    min: parseInt(minMax[0]),
+                    max: parseInt(minMax[1]),
+                    values: [parseInt($(this).siblings('input').eq(0).val()), parseInt($(this).siblings('input').eq(1).val())],
+                    slide: function (event, ui) {
+                        $(this).siblings('.slider-info').find('span').text(ui.values[0] + ' - ' + ui.values[1]);
+                        $(this).siblings('input').eq(0).val(ui.values[0]);
+                        $(this).siblings('input').eq(1).val(ui.values[1]);
+                    }
+                });
+            }
+        );
+    </script>
 </div>
 
 </body>
