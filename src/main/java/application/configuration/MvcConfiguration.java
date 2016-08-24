@@ -1,5 +1,6 @@
 package application.configuration;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import java.util.List;
  * Created by Adam_Skowron on 17.08.2016.
  */
 @Configuration
+@EnableCaching
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override

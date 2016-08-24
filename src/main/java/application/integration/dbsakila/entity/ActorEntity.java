@@ -1,11 +1,15 @@
 package application.integration.dbsakila.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * ActorEntity entity.
@@ -13,10 +17,12 @@ import javax.persistence.Id;
  * Created by Adam_Skowron on 08.08.2016.
  */
 @Entity
+@Table(name = "actor")
 public class ActorEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "actor_id")
     private int id;
 
     @Column(name = "first_name")
@@ -27,6 +33,9 @@ public class ActorEntity {
 
     @Column(name = "last_update")
     private Date lastUpdate;
+
+    @ManyToMany(mappedBy = "actors")
+    private Set<FilmEntity> films = new HashSet<>();
 
     public int getId() {
         return id;
@@ -68,5 +77,13 @@ public class ActorEntity {
                ", lastname='" + lastname + '\'' +
                ", lastUpdate=" + lastUpdate +
                '}';
+    }
+
+    public Set<FilmEntity> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<FilmEntity> films) {
+        this.films = films;
     }
 }
