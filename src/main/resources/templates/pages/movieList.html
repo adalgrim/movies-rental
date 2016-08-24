@@ -89,8 +89,8 @@
         <div class="flex-row row">
             <div class="col-xs-6 col-sm-4 col-lg-3" th:each="movie : ${page.getContent()}">
                 <div class="thumbnail">
-                    <img th:src="${movie.poster}" alt="" class="poster" />
-                    <h2 th:text="${movie.title}"></h2>
+                    <a th:href="@{/movie/} + ${movie.id}"><img th:src="${movie.poster}" alt="" class="poster" /></a>
+                    <a th:href="@{/movie/} + ${movie.id}"><h2 th:text="${movie.title}"></h2></a>
                     <div th:text="${movie.description}" style="font-weight: bold;"></div>
                     <div>
                         Year: <span th:text="${movie.releaseYear}"></span>,

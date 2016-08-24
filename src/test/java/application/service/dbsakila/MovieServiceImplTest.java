@@ -1,6 +1,7 @@
 package application.service.dbsakila;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyLong;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 import application.MoviesRentalTest;
@@ -13,6 +14,7 @@ import application.integration.dbsakila.dao.FilmRepository;
 import application.integration.dbsakila.dao.LanguageRepository;
 import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.entity.builder.FilmEntityBuilder;
+import application.integration.dbsakila.mapper.FilmMapper;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.springframework.data.domain.Page;
@@ -51,7 +53,6 @@ public class MovieServiceImplTest extends MoviesRentalTest {
 
     @Test
     public void testGetMovies() throws Exception {
-
         PageRequest pageRequest = new PageRequest(0, 20);
 
         when(filmRepository.findAll(pageRequest)).thenReturn(this.findAllAsPage());
@@ -59,6 +60,15 @@ public class MovieServiceImplTest extends MoviesRentalTest {
         assertThat(movieService.getMovies(pageRequest)).size().isEqualTo(5);
         assertThat(movieService.getMovies(pageRequest)).filteredOn("rating", Rating.PG13).size().isEqualTo(1);
         assertThat(movieService.getMovies(pageRequest)).filteredOn("rating", Rating.R).size().isEqualTo(4);
+    }
+
+    @Test
+    public void testGetMovie() {
+        FilmEntity filmEntity = FilmEntityBuilder.aFilmEntity().withId(1L).withTitle("AAA").withRating(
+            Rating.R).withLength(100).withDescription("description").build();
+        when(filmRepository.findOne(anyLong())).thenReturn(filmEntity);
+
+        assertThat(movieService.getMovie(1L)).isEqualToComparingFieldByField(FilmMapper.INSTANCE.FilmEntityToFilm(filmEntity));
     }
 
     @Test

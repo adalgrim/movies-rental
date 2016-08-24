@@ -33,6 +33,8 @@ public class Film {
 
     private Set<Actor> actors;
 
+    private String fullDescription;
+
     public void setId(long id) {
         this.id = id;
     }
@@ -111,5 +113,13 @@ public class Film {
 
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+
+    public String getFullDescription() {
+        return fullDescription;
+    }
+
+    public void setFullDescription(String fullDescription) {
+        this.fullDescription = fullDescription;
     }
 }

@@ -1,5 +1,6 @@
 package application.gui.home;
 
+import application.common.domain.Film;
 import application.common.domain.MovieSearchParams;
 import application.service.dbsakila.CategoryService;
 import application.service.dbsakila.LanguageService;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -73,6 +75,20 @@ public class MovieController {
         model.addAttribute("params", requestParams);
 
         return "pages/movieList";
+    }
+
+    @RequestMapping("/movie/{id}")
+    String showMovie(Model model, @PathVariable("id") Long id) {
+
+        model.addAttribute("movie", movieService.getMovie(id));
+
+
+        return "pages/movie";
+    }
+
+    @RequestMapping("/movie")
+    String showMovie() {
+        return "redirect:movies";
     }
 
     private String preparePaginationUrl(Sort sort, Map<String, String> requestParams) {
