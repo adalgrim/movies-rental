@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" layout:decorator="indexTemplate">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${movie.title}">Movie</title>
+</head>
+<body>
+
+<nav th:fragment="fragments/menu :: movies"></nav>
+
+<div layout:fragment="content" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <br/>
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <img th:src="${movie.poster}" class="img-responsive" alt="" />
+        </div>
+
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <h1 th:text="${movie.title}"></h1>
+            <div><ul class="list-inline categories">
+                <li th:each="category : ${movie.categories}">
+                    <a th:href="@{/movies(categoryId=${category.id})}" th:text="${category.name}"></a>
+                </li>
+            </ul></div>
+
+            <div>Release year: <b><span th:text="${movie.releaseYear}"></span></b></div>
+            <div>Length: <b><span th:text="${movie.length}"></span></b></div>
+            <div>Rating: <b><span th:text="${movie.rating}"></span></b></div>
+            <div>Language: <b><span th:text="${movie.language.name}"></span></b></div>
+
+            <br />
+            <strong><div th:text="${movie.description}"></div></strong>
+            <br />
+            <div th:text="${movie.fullDescription}"></div>
+
+            <br /><br />
+            <h2>Cast</h2>
+
+            <table class="table-striped">
+                <tr th:each="actor : ${movie.actors}">
+                    <td class="photo">
+                    </td>
+                    <td class="actor-name">
+                        <a th:href="@{/movies(actorName=${actor.firstname} + ' ' + ${actor.lastname})}" th:text="${actor.firstname} + ' ' + ${actor.lastname}"></a>
+                    </td>
+                </tr>
+            </table>
+            <div class="clearfix"></div>
+            <br />
+        </div>
+        <div class="clearfix"></div>
+</div>
+
+</body>
+</html>

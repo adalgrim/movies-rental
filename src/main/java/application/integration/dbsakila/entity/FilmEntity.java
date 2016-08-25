@@ -3,10 +3,8 @@ package application.integration.dbsakila.entity;
 import application.common.types.Rating;
 import application.integration.dbsakila.converter.RatingConverter;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -18,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +36,10 @@ public class FilmEntity {
     private String title;
 
     private String description;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private FilmTextEntity filmTextEntity;
 
     @Column(name = "release_year")
     private int releaseYear;
@@ -151,5 +154,13 @@ public class FilmEntity {
 
     public void setActors(Set<ActorEntity> actors) {
         this.actors = actors;
+    }
+
+    public FilmTextEntity getFilmTextEntity() {
+        return filmTextEntity;
+    }
+
+    public void setFilmTextEntity(FilmTextEntity filmTextEntity) {
+        this.filmTextEntity = filmTextEntity;
     }
 }

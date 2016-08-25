@@ -55,12 +55,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Film> getMovies() {
-        return filmRepository
-            .findAll()
-            .stream()
-            .map(FilmMapper.INSTANCE::FilmEntityToFilm)
-            .collect(Collectors.toList());
+    public Film getMovie(Long id) {
+        return FilmMapper.INSTANCE.FilmEntityToFilm(filmRepository.findOne(id));
     }
 
     @Override

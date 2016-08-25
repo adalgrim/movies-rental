@@ -40,11 +40,12 @@ public interface MovieService {
     Page<Film> getMovies(Pageable pageable);
 
     /**
-     * Fetch all Movies without page
      *
-     * @return list of movies
+     * @param id
+     * @return
      */
-    List<Film> getMovies();
+    Film getMovie(Long id);
+
 
     /**
      * Save Film

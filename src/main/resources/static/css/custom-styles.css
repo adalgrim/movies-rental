@@ -1,6 +1,9 @@
 header{position:fixed;left:0;top:0;z-index:1002;height:60px;width:100%;min-width:320px}
 header .uui-header .brand-logo .logo img { vertical-align: top; width: auto; height: 34px; }
 
+a { color: #1a1a1a; }
+a:hover { text-decoration: none; color: #39c2d7; }
+
 @media only screen and (min-width : 481px) {
    .flex-row.row {
 	 display: -webkit-flex;
@@ -55,3 +58,10 @@ footer, .wrapper:after {
 
 .borderless td.range-cell { width: 250px; padding: 3px 15px !important; }
 .no-padding {padding: 0;}
+
+h1 { margin-bottom: 5px; }
+.photo { width: 60px; height: 60px; background: #dbdbdb; }
+.actor-name { vertical-align: middle !important; padding-left: 10px; }
+
+.categories li a { background: #f4f4f4; padding: 3px 8px; display: block; }
+.categories li a:hover { background: #39c2d7; color: #fff; }

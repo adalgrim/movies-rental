@@ -10,6 +10,8 @@ import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.entity.LanguageEntity;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.core.convert.converter.Converter;
@@ -26,8 +28,13 @@ public interface FilmMapper {
 
     FilmMapper INSTANCE = Mappers.getMapper(FilmMapper.class);
 
+    @Mappings({
+        @Mapping(target = "fullDescription", source = "filmTextEntity.description")
+    })
     Film FilmEntityToFilm(FilmEntity filmEntity);
 
+    @Mappings({
+        @Mapping(target = "filmTextEntity.description", source = "fullDescription")
+    })
     FilmEntity FilmToFilmEntity(Film film);
-
 }
