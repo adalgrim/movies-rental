@@ -1,4 +1,4 @@
-package application.gui.home;
+package application.gui.utils;
 
 import org.springframework.data.domain.Page;
 
@@ -31,7 +31,8 @@ public class PageWrapper<T> {
 
         currentNumber = page.getNumber() + 1; //start from 1 to match page
 
-        int start, size;
+        int start;
+        int size;
         if (page.getTotalPages() <= MAX_PAGE_ITEM_DISPLAY) {
             start = 1;
             size = page.getTotalPages();

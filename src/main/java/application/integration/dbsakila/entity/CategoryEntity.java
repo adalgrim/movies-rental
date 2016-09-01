@@ -18,20 +18,20 @@ import javax.persistence.Table;
 public class CategoryEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "category_id")
-    private int id;
+    private long id;
 
     private String name;
 
     @ManyToMany(mappedBy = "categories")
     private Set<FilmEntity> films = new HashSet<>();
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

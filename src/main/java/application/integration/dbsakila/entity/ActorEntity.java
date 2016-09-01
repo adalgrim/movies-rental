@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 /**
  * ActorEntity entity.
- *
+ * <p>
  * Created by Adam_Skowron on 08.08.2016.
  */
 @Entity
@@ -21,9 +21,9 @@ import javax.persistence.Table;
 public class ActorEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "actor_id")
-    private int id;
+    private long id;
 
     @Column(name = "first_name")
     private String firstname;
@@ -37,11 +37,11 @@ public class ActorEntity {
     @ManyToMany(mappedBy = "actors")
     private Set<FilmEntity> films = new HashSet<>();
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -72,11 +72,11 @@ public class ActorEntity {
     @Override
     public String toString() {
         return "ActorEntity{" +
-               "id=" + id +
-               ", firstname='" + firstname + '\'' +
-               ", lastname='" + lastname + '\'' +
-               ", lastUpdate=" + lastUpdate +
-               '}';
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                '}';
     }
 
     public Set<FilmEntity> getFilms() {

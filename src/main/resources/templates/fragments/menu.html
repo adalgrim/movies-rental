@@ -7,14 +7,14 @@
 <body>
 <div class="uui-side-bar" th:fragment="menu">
     <ul class="sidebar-menu">
-        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('movies')) ? 'active' : ''}">
+        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('movies') || #httpServletRequest.requestURL.toString().matches('movie/[0-9]')) ? 'active' : ''}">
             <a href="/movies" th:href="@{/movies}">
                 <span>Movies</span>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <span>Item 2</span>
+        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('newmovie')) ? 'active' : ''}">
+            <a href="/movies" th:href="@{/newmovie}">
+                <span>Add movie</span>
             </a>
         </li>
         <li>

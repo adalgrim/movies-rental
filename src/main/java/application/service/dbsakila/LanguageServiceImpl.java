@@ -27,8 +27,13 @@ public class LanguageServiceImpl implements LanguageService {
         return languageRepository
             .findAll()
             .stream()
-            .map(LanguageMapper.INSTANCE::LanguageEntityToLanguage)
+            .map(LanguageMapper.INSTANCE::languageEntityToLanguage)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public Language findOne(Long languageId) {
+        return LanguageMapper.INSTANCE.languageEntityToLanguage(languageRepository.findOne(languageId));
     }
 
 }

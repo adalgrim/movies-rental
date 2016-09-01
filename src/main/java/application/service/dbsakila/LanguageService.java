@@ -18,4 +18,11 @@ public interface LanguageService {
     @Cacheable("languages")
     List<Language> findAllLanguages();
 
+    /**
+     * Fetch one language
+     *
+     * @param languageId language id
+     * @return languge object
+     */
+    Language findOne(Long languageId);
 }

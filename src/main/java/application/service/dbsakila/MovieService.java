@@ -1,15 +1,10 @@
 package application.service.dbsakila;
 
-import application.common.domain.Category;
 import application.common.domain.Film;
 import application.common.domain.FilmSearchResult;
-import application.common.domain.Language;
 import application.common.domain.MovieSearchParams;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * MovieService interface.
@@ -41,20 +36,15 @@ public interface MovieService {
 
     /**
      *
-     * @param id
-     * @return
+     * @param id movie id
+     * @return Movie DTO
      */
     Film getMovie(Long id);
 
-
     /**
-     * Save Film
+     * Save Movie to db.
      *
-     * @param film
+     * @param film dto
      */
-    void saveFilm(Film film);
-
-
-
-
+    Film save(Film film);
 }

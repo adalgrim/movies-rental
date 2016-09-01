@@ -1,10 +1,10 @@
 package application.integration.dbsakila.entity;
 
-import javax.persistence.Column;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -12,39 +12,28 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "film_text")
-public class FilmTextEntity {
+public class FilmTextEntity implements Serializable {
 
-    @Id
-    @Column(name = "film_id")
-    private long id;
+    private String title;
 
     private String description;
 
-    @OneToOne(mappedBy="filmTextEntity")
-    @PrimaryKeyJoinColumn
+    @Id
+    @OneToOne
+    @JoinColumn(name = "film_id")
     private FilmEntity filmEntity;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public FilmEntity getFilmEntity() {
         return filmEntity;
     }
 
-    public void setFilmEntity(FilmEntity filmEntity) {
-        this.filmEntity = filmEntity;
-    }
+
 }

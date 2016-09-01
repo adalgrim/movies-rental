@@ -1,11 +1,14 @@
 package application.common.domain;
 
 /**
- * Created by Adam_Skowron on 22.08.2016.
+ * Helper class for REST to return id and name of something.
+ *
+ * Created by Adam_Skowron on 25.08.2016.
  */
-public class Category {
+public class RestIdNamePair {
 
     private long id;
+
     private String name;
 
     public long getId() {

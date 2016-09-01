@@ -2,25 +2,31 @@ package application.gui.home;
 
 import application.common.domain.Film;
 import application.common.domain.MovieSearchParams;
+import application.common.types.Rating;
+import application.gui.propertyeditor.StringArrayToLongSetEditor;
+import application.gui.utils.PageWrapper;
+import application.gui.utils.PaginationHelper;
+import application.service.dbsakila.ActorService;
 import application.service.dbsakila.CategoryService;
 import application.service.dbsakila.LanguageService;
 import application.service.dbsakila.MovieService;
-import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * Movies Controller.
@@ -36,34 +42,31 @@ public class MovieController {
 
     private CategoryService categoryService;
 
+    private ActorService actorService;
+
+    @Autowired
+    private MovieViewModel movieViewModel;
+
     @Autowired
     public MovieController(MovieService movieService, LanguageService languageService,
-                           CategoryService categoryService) {
+                           CategoryService categoryService, ActorService actorService) {
         this.movieService = movieService;
         this.languageService = languageService;
         this.categoryService = categoryService;
+        this.actorService = actorService;
     }
 
-    @Autowired
-    public MovieViewModel movieViewModel;
-
-    private final Sort.Order defaultSortOrder = new Sort.Order(Sort.Direction.ASC, "title");
-
     @RequestMapping("/movies")
-    String movies(Model model, Pageable pageable, Sort sort, MovieSearchParams movieSearchParams,
+    String movies(Model model, Sort sort, Pageable pageable, MovieSearchParams movieSearchParams,
                   @RequestParam
                       Map<String, String> requestParams) {
 
-        sort = this.parseSortParams(sort);
-        PageRequest pageRequest = new PageRequest(
-            pageable.getPageNumber(),
-            pageable.getPageSize(),
-            sort);
+        PaginationHelper paginationHelper = new PaginationHelper(sort, requestParams, movieViewModel.getSortItems());
+        PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), paginationHelper.parseSortParams());
 
-        String paginationUrl = this.preparePaginationUrl(sort, requestParams);
-        model.addAttribute("sort", beautifyOrder(sort));
+        //model.addAttribute("sort", beautifyOrder(sort));
         model.addAttribute("page", new PageWrapper<>(movieService.getMovies(movieSearchParams, pageRequest),
-                                                     "/movies" + paginationUrl));
+                                                     "/movies" + paginationHelper.getUrl()));
         model.addAttribute("sortItems", movieViewModel.getSortItems());
         model.addAttribute("yearMinMax", "1970;2016");
         model.addAttribute("lengthMinMax", "0;360");
@@ -79,10 +82,7 @@ public class MovieController {
 
     @RequestMapping("/movie/{id}")
     String showMovie(Model model, @PathVariable("id") Long id) {
-
         model.addAttribute("movie", movieService.getMovie(id));
-
-
         return "pages/movie";
     }
 
@@ -91,44 +91,26 @@ public class MovieController {
         return "redirect:movies";
     }
 
-    private String preparePaginationUrl(Sort sort, Map<String, String> requestParams) {
-        List<String> url = new ArrayList<>();
-
-        if (sort != null && !defaultSortOrder.toString().equalsIgnoreCase(sort.toString())) {
-            url.add("sort=" + beautifyOrder(sort));
-        }
-
-        if (MapUtils.isNotEmpty(requestParams)) {
-            url.addAll(requestParams.entrySet()
-                           .stream()
-                           .filter(stringStringEntry -> !"page".equals(stringStringEntry.getKey()))
-                           .map(entry -> entry.getKey() + "=" + entry.getValue())
-                           .collect(Collectors.toList()));
-        }
-
-        return CollectionUtils.isEmpty(url) ? "" : "?" + String.join("&", url);
+    @RequestMapping("/newmovie")
+    String addMovie(Model model) {
+        model.addAttribute(new Film());
+        model.addAttribute("categories", categoryService.findAllCategories());
+        model.addAttribute("languages", languageService.findAllLanguages());
+        model.addAttribute("ratings", Rating.values());
+        return "pages/movieAdd";
     }
 
-    private Sort parseSortParams(Sort sortRequest) {
-        List<Sort.Order> sortResult = new ArrayList<>();
-        if (sortRequest == null) {
-            return null;
-        }
-
-        for (Sort.Order order : sortRequest) {
-            if (movieViewModel.getSortItems().containsKey(beautifyOrder(order))) {
-                sortResult.add(order);
-            }
-        }
-        if (CollectionUtils.isEmpty(sortResult)) {
-            sortResult.add(defaultSortOrder);
-        }
-
-        return new Sort(sortResult);
+    @RequestMapping(path = "/newmovie", method = RequestMethod.POST)
+    String saveMovie(@ModelAttribute Film film, BindingResult bindingResult) {
+        film.setPoster(movieViewModel.getPoster(film.getTitle()));
+        Film savedFilmDto = movieService.save(film);
+        return "redirect:movie/" + savedFilmDto.getId();
     }
 
-    private String beautifyOrder(Object orderOption) {
-        return (orderOption == null) ? null : orderOption.toString().replace(": ", "_");
+    @InitBinder
+    protected void initBinder(final WebDataBinder binder) {
+        binder.registerCustomEditor(Set.class, "categories", new StringArrayToLongSetEditor(categoryService));
+        binder.registerCustomEditor(Set.class, "actors", new StringArrayToLongSetEditor(actorService));
     }
 
 }

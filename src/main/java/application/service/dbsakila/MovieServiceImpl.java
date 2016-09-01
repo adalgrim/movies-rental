@@ -4,15 +4,14 @@ import application.common.domain.Film;
 import application.common.domain.FilmSearchResult;
 import application.common.domain.MovieSearchParams;
 import application.integration.dbsakila.dao.FilmRepository;
+import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.mapper.FilmMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Sakila Service Impl.
@@ -36,32 +35,34 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<FilmSearchResult> getMovies(MovieSearchParams movieSearchParams, Pageable pageable) {
-            return filmRepository.searchAll(StringUtils.isNotEmpty(movieSearchParams.getTitle()) ? "%" + movieSearchParams.getTitle() + "%" : null,
-                       StringUtils.isNotEmpty(movieSearchParams.getActorName()) ? "%"+movieSearchParams.getActorName()+"%" : null,
-                       movieSearchParams.getLengthFrom(),
-                       movieSearchParams.getLengthTo(),
-                       movieSearchParams.getYearFrom(),
-                       movieSearchParams.getYearTo(),
-                       movieSearchParams.getLanguageId(),
-                       movieSearchParams.getCategoryId(),
-                       pageable);
+        return filmRepository.searchAll(StringUtils.isNotEmpty(movieSearchParams.getTitle()) ? "%" + movieSearchParams.getTitle() + "%" : null,
+                StringUtils.isNotEmpty(movieSearchParams.getActorName()) ? "%" + movieSearchParams.getActorName() + "%" : null,
+                movieSearchParams.getLengthFrom(),
+                movieSearchParams.getLengthTo(),
+                movieSearchParams.getYearFrom(),
+                movieSearchParams.getYearTo(),
+                movieSearchParams.getLanguageId(),
+                movieSearchParams.getCategoryId(),
+                pageable);
     }
 
     @Override
     public Page<Film> getMovies(Pageable pageable) {
         return filmRepository
-            .findAll(pageable)
-            .map(FilmMapper.INSTANCE::FilmEntityToFilm);
+                .findAll(pageable)
+                .map(FilmMapper.INSTANCE::filmEntityToFilm);
     }
 
     @Override
     public Film getMovie(Long id) {
-        return FilmMapper.INSTANCE.FilmEntityToFilm(filmRepository.findOne(id));
+        return FilmMapper.INSTANCE.filmEntityToFilm(filmRepository.findOne(id));
     }
 
     @Override
-    public void saveFilm(Film film) {
-        filmRepository.save(FilmMapper.INSTANCE.FilmToFilmEntity(film));
+    @Transactional
+    public Film save(Film film) {
+        FilmEntity filmEntity = filmRepository.save(FilmMapper.INSTANCE.filmToFilmEntity(film));
+        return FilmMapper.INSTANCE.filmEntityToFilm(filmEntity);
     }
 
 }

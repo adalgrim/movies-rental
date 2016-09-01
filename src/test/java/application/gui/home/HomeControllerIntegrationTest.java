@@ -3,11 +3,11 @@ package application.gui.home;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import application.MoviesRentalTest;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
-import org.testng.annotations.Test;
 
 /**
  * Integration test for HomeController.
