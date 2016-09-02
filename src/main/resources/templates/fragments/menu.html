@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -7,24 +7,19 @@
 <body>
 <div class="uui-side-bar" th:fragment="menu">
     <ul class="sidebar-menu">
-        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('movies') || #httpServletRequest.requestURL.toString().matches('movie/[0-9]')) ? 'active' : ''}">
+        <li sec:authorize="hasRole('ROLE_USER')" th:classappend="${(#httpServletRequest.requestURL.toString().contains('movies') || #httpServletRequest.requestURL.toString().matches('movie/[0-9]')) ? 'active' : ''}">
             <a href="/movies" th:href="@{/movies}">
                 <span>Movies</span>
             </a>
         </li>
-        <li th:classappend="${(#httpServletRequest.requestURL.toString().contains('newmovie')) ? 'active' : ''}">
-            <a href="/movies" th:href="@{/newmovie}">
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="${(#httpServletRequest.requestURL.toString().contains('newmovie')) ? 'active' : ''}">
+            <a href="/newmovie" th:href="@{/newmovie}">
                 <span>Add movie</span>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <span>Item 3</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span>Item 4</span>
+        <li sec:authorize="isAuthenticated()">
+            <a href="/logout" th:href="@{/logout}">
+                <span>Logout</span>
             </a>
         </li>
     </ul>
