@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS user_roles;
+
+CREATE TABLE `sakila`.`user_roles` (
+    `user_role_id` INT(11) NOT NULL AUTO_INCREMENT ,
+    `userid` INT(11) NOT NULL ,
+    `role` VARCHAR(40) NOT NULL ,
+    PRIMARY KEY (`user_role_id`),
+    UNIQUE KEY `uni_userid_role` (`role`,`userid`),
+    KEY `fk_user_idx` (`userid`),
+    CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES users (`userid`)
+) ENGINE = InnoDB;
+
+INSERT INTO user_roles (userid, role) VALUES (1, 'ROLE_ADMIN');
+                                                              INSERT INTO user_roles (userid, role) VALUES (2, 'ROLE_USER');

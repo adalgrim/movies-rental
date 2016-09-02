@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE `sakila`.`users` (
+  `userid` INT(11) NOT NULL AUTO_INCREMENT,
+`username` VARCHAR(45) NOT NULL,
+`email` VARCHAR(255) NOT NULL,
+`password` VARCHAR(60) NOT NULL,
+`enabled` TINYINT NOT NULL DEFAULT 1,
+PRIMARY KEY ('userid')
+) ENGINE = InnoDB;
+
+INSERT INTO users(username,email,password,enabled)
+VALUES ('admin','admin@epam.com','$2a$10$cX61G2ShhkQcMMu3/Y1XZOCUTE.1vHE7u0e/ddVqyd0gP8GD7ZTWe', true);
+INSERT INTO users(username,email,password,enabled)
+VALUES ('user','user@epam.com','$2a$10$A9dYAhg2Gru8ti3NQZ1rSudB2oruE68Q4iTfc2RiF..tFTHpODWi2', true);
+
