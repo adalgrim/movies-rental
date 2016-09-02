@@ -1,30 +1,30 @@
 package application.integration.dbsakila.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import application.MoviesRentalTest;
 import application.common.domain.FilmSearchResult;
-import application.common.domain.MovieSearchParams;
-import application.common.domain.MovieSearchParamsBuilder;
 import application.integration.dbsakila.entity.ActorEntity;
 import application.integration.dbsakila.entity.CategoryEntity;
 import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.entity.LanguageEntity;
 import application.integration.dbsakila.entity.builder.ActorEntityBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.HashSet;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * FilmRepositoryTest.
  *
  * Created by Adam_Skowron on 09.08.2016.
  */
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class FilmRepositoryTest extends MoviesRentalTest {
 
     @Autowired
@@ -39,8 +39,16 @@ public class FilmRepositoryTest extends MoviesRentalTest {
     @Autowired
     private ActorRepository actorRepository;
 
-    @BeforeClass
+    private static boolean isInitialized = false;
+
+    @Before
     public void setUp() throws Exception {
+
+        if (isInitialized) {
+            return;
+        }
+
+        System.out.println("Initilizing db:");
 
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setId(1);
@@ -69,37 +77,55 @@ public class FilmRepositoryTest extends MoviesRentalTest {
         filmEntity.setLength(100);
         filmEntity.setLanguage(languageEntity); // English
         filmEntity.setReleaseYear(2013);
-        filmEntity.setCategories(new HashSet<CategoryEntity>() {{ add(categoryEntity); }}); // Action
+        filmEntity.setCategories(new HashSet<CategoryEntity>() {{
+            add(categoryEntity);
+        }}); // Action
 
         FilmEntity filmEntity2 = new FilmEntity();
         filmEntity2.setTitle("BBB");
         filmEntity2.setLength(180);
         filmEntity2.setLanguage(languageEntity); // English
         filmEntity2.setReleaseYear(2014);
-        filmEntity2.setCategories(new HashSet<CategoryEntity>() {{ add(categoryEntity2); }}); // Drama
+        filmEntity2.setCategories(new HashSet<CategoryEntity>() {{
+            add(categoryEntity2);
+        }}); // Drama
 
         FilmEntity filmEntity3 = new FilmEntity();
         filmEntity3.setTitle("ZZZ");
         filmEntity3.setLength(90);
         filmEntity3.setLanguage(languageEntity2); // Polish
         filmEntity3.setReleaseYear(2015);
-        filmEntity3.setCategories(new HashSet<CategoryEntity>() {{ add(categoryEntity2); }}); // Drama
+        filmEntity3.setCategories(new HashSet<CategoryEntity>() {{
+            add(categoryEntity2);
+        }}); // Drama
 
         ActorEntity actorEntity = ActorEntityBuilder.anActorEntity()
-            .withFirstname("Matt").withLastname("Damon")
-            .withFilms(new HashSet<FilmEntity>() {{ add(filmEntity); }}).build();
+                .withFirstname("Matt").withLastname("Damon")
+                .withFilms(new HashSet<FilmEntity>() {{
+                    add(filmEntity);
+                }}).build();
 
         ActorEntity actorEntity2 = ActorEntityBuilder.anActorEntity()
-            .withFirstname("Judy").withLastname("Foster")
-            .withFilms(new HashSet<FilmEntity>() {{ add(filmEntity); }}).build();
+                .withFirstname("Judy").withLastname("Foster")
+                .withFilms(new HashSet<FilmEntity>() {{
+                    add(filmEntity);
+                }}).build();
 
-        filmEntity.setActors(new HashSet<ActorEntity>() {{ add(actorEntity); }});
-        filmEntity2.setActors(new HashSet<ActorEntity>() {{ add(actorEntity2); }});
         actorRepository.save(actorEntity);
         actorRepository.save(actorEntity2);
+
+        filmEntity.setActors(new HashSet<ActorEntity>() {{
+            add(actorEntity);
+        }});
+        filmEntity2.setActors(new HashSet<ActorEntity>() {{
+            add(actorEntity2);
+        }});
+
         filmRepository.save(filmEntity);
         filmRepository.save(filmEntity2);
         filmRepository.save(filmEntity3);
+
+        isInitialized = true;
     }
 
     @Test
@@ -130,13 +156,13 @@ public class FilmRepositoryTest extends MoviesRentalTest {
     @Test
     public void testSortMovies() {
         Page<FilmEntity> filmEntityPageSortedByTitleAsc = filmRepository.findAll(new PageRequest(0, 1, new Sort(new Sort.Order(
-            Sort.Direction.ASC, "title"))));
+                Sort.Direction.ASC, "title"))));
         Page<FilmEntity> filmEntityPageSortedByTitleDesc = filmRepository.findAll(new PageRequest(0, 1, new Sort(new Sort.Order(
-            Sort.Direction.DESC, "title"))));
+                Sort.Direction.DESC, "title"))));
         Page<FilmEntity> filmEntityPageSortedByLengthAsc = filmRepository.findAll(new PageRequest(0, 1, new Sort(new Sort.Order(
-            Sort.Direction.ASC, "length"))));
+                Sort.Direction.ASC, "length"))));
         Page<FilmEntity> filmEntityPageSortedByLengthDesc = filmRepository.findAll(new PageRequest(0, 1, new Sort(new Sort.Order(
-            Sort.Direction.DESC, "length"))));
+                Sort.Direction.DESC, "length"))));
 
         assertThat(filmEntityPageSortedByTitleAsc).isNotEmpty().size().isEqualTo(1);
         assertThat(filmEntityPageSortedByTitleDesc).isNotEmpty().size().isEqualTo(1);

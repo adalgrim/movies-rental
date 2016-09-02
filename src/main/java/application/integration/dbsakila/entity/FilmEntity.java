@@ -3,6 +3,7 @@ package application.integration.dbsakila.entity;
 import application.common.types.Rating;
 import application.integration.dbsakila.converter.RatingConverter;
 
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,20 +17,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
  * Film Entity.
- *
+ * <p>
  * Created by Adam_Skowron on 09.08.2016.
  */
 @Entity
 @Table(name = "film")
-public class FilmEntity {
+public class FilmEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "film_id")
     private long id;
 
@@ -37,8 +37,7 @@ public class FilmEntity {
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "filmEntity")
     private FilmTextEntity filmTextEntity;
 
     @Column(name = "release_year")
@@ -46,7 +45,7 @@ public class FilmEntity {
 
     private int length;
 
-    @Convert(converter=RatingConverter.class)
+    @Convert(converter = RatingConverter.class)
     private Rating rating;
 
     private String poster;
@@ -57,14 +56,14 @@ public class FilmEntity {
 
     @ManyToMany
     @JoinTable(name = "film_category",
-        joinColumns = { @JoinColumn(name = "film_id") },
-    inverseJoinColumns = { @JoinColumn(name = "category_id") })
+            joinColumns = {@JoinColumn(name = "film_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<CategoryEntity> categories;
 
     @ManyToMany
     @JoinTable(name = "film_actor",
-        joinColumns = { @JoinColumn(name = "film_id") },
-        inverseJoinColumns = { @JoinColumn(name = "actor_id") })
+            joinColumns = {@JoinColumn(name = "film_id")},
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")})
     private Set<ActorEntity> actors;
 
     public long getId() {
@@ -123,15 +122,6 @@ public class FilmEntity {
         this.poster = poster;
     }
 
-    @Override
-    public String toString() {
-        return "FilmEntity{" +
-               "id=" + id +
-               ", title='" + title + '\'' +
-               ", description='" + description + '\'' +
-               '}';
-    }
-
     public LanguageEntity getLanguage() {
         return language;
     }
@@ -162,5 +152,22 @@ public class FilmEntity {
 
     public void setFilmTextEntity(FilmTextEntity filmTextEntity) {
         this.filmTextEntity = filmTextEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "FilmEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", filmTextEntity=" + filmTextEntity +
+                ", releaseYear=" + releaseYear +
+                ", length=" + length +
+                ", rating=" + rating +
+                ", poster='" + poster + '\'' +
+                ", language=" + language +
+                ", categories=" + categories +
+                ", actors=" + actors +
+                '}';
     }
 }

@@ -1,10 +1,10 @@
 package application.gui.home;
 
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import application.service.dbsakila.MovieService;
+import application.service.dbsakila.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * RestController of Movies Rental.

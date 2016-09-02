@@ -15,12 +15,12 @@ public interface ActorMapper {
 
     ActorMapper INSTANCE = Mappers.getMapper(ActorMapper.class);
 
-    Actor ActorEntityToActor(ActorEntity categoryEntity);
+    Actor actorEntityToActor(ActorEntity categoryEntity);
 
-    Set<Actor> ActorEntitySetToActorSet(Set<ActorEntity> actorEntitySet);
+    Set<Actor> actorEntitySetToActorSet(Set<ActorEntity> actorEntitySet);
 
-    ActorEntity ActorToActorEntity(Actor actor);
+    ActorEntity actorToActorEntity(Actor actor);
 
-    Set<ActorEntity> ActorSetToActorEntitySet(Set<Actor> actorSet);
+    Set<ActorEntity> actorSetToActorEntitySet(Set<Actor> actorSet);
 
 }

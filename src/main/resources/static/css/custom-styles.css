@@ -43,7 +43,7 @@ a:hover { text-decoration: none; color: #39c2d7; }
   content: "";
   display: block;
 }
-footer, .wrapper:after {
+footer {
   height: 60px;
 }
 
@@ -65,3 +65,5 @@ h1 { margin-bottom: 5px; }
 
 .categories li a { background: #f4f4f4; padding: 3px 8px; display: block; }
 .categories li a:hover { background: #39c2d7; color: #fff; }
+
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark{top:50%;right:12px !important;margin-top:-9px !important;color:#39c2d7;font-size:14px}

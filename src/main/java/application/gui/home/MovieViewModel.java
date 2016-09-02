@@ -1,8 +1,8 @@
 package application.gui.home;
 
 import groovy.lang.Singleton;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,10 +22,32 @@ public class MovieViewModel {
         put("title_DESC", "by title, descending");
         put("length_ASC", "shortest first");
         put("length_DESC", "longest first");
-    }};
+        }
+    };
 
     public Map<String, String> getSortItems() {
         return sortItems;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getPoster(String title) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HashMap<String, String>
+            hashMap =
+            restTemplate.getForObject("http://www.omdbapi.com/?t=" + title.toLowerCase(), HashMap.class);
+        if (hashMap.containsKey("Poster") && !"N/A".equalsIgnoreCase(hashMap.get("Poster"))) {
+            return hashMap.get("Poster");
+        }
+
+        String[] titleParts = title.split(" ");
+        for (String part : titleParts) {
+            hashMap = restTemplate.getForObject("http://www.omdbapi.com/?t=" + part.toLowerCase(), HashMap.class);
+            if (hashMap.containsKey("Poster") && !"N/A".equalsIgnoreCase(hashMap.get("Poster"))) {
+                return hashMap.get("Poster");
+            }
+        }
+        return "";
     }
 
 }

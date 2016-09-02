@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" layout:decorator="indexTemplate">
+<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" layout:decorator="indexTemplate">
 <head>
     <meta charset="UTF-8"/>
     <title>Home page</title>
@@ -13,6 +13,37 @@
         In our Movie Rental you can choose among
         <!--/*@thymesVar id="moviesCount" type="application.gui.home.HomeController"*/-->
         <span th:text="${moviesCount}"></span> titles!
+
+        <br /><br /><br /><br />
+        <h3>Please log in to browse our database</h3>
+
+        <p th:if="${loginError}">Wrong user or password</p>
+        <form th:action="@{/}" method="post" class="form-horizontal">
+            <fieldset>
+                <div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="username">Username</label>
+                        <div class="col-md-4">
+                            <input id="username" name="username" type="text" placeholder="Title" class="uui-form-element" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="password">Password</label>
+                        <div class="col-md-4">
+                            <input id="password" name="password" type="password" placeholder="Password" class="uui-form-element" required="required" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <input type="submit" class="uui-button blue" value="Log in" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+
     </div>
 </div>
 

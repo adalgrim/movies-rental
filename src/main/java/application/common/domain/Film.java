@@ -1,9 +1,8 @@
 package application.common.domain;
 
 import application.common.types.Rating;
-import application.integration.dbsakila.entity.FilmEntity;
 
-import java.util.List;
+import java.util.Calendar;
 import java.util.Set;
 
 /**
@@ -19,7 +18,7 @@ public class Film {
 
     private String description;
 
-    private int releaseYear;
+    private int releaseYear = Calendar.getInstance().get(Calendar.YEAR);
 
     private int length;
 
@@ -122,4 +121,5 @@ public class Film {
     public void setFullDescription(String fullDescription) {
         this.fullDescription = fullDescription;
     }
+
 }

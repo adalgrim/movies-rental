@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" layout:decorator="indexTemplate">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add movie</title>
+    <link rel="stylesheet" href="/css/magicsuggest.css" />
+    <script src="/js/lib/magicsuggest.js"></script>
+</head>
+<body>
+
+<nav th:fragment="fragments/menu :: movies"></nav>
+
+<div layout:fragment="content" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <br/>
+    <form id="form" th:object="${film}" class="form-horizontal" th:action="@{/newmovie}" method="post">
+        <fieldset>
+            <!-- Form Name -->
+            <h1>Add new movie</h1>
+            <br/>
+
+            <div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="title">Title</label>
+                    <div class="col-md-4">
+                        <input id="title" th:field="*{title}" type="text" placeholder="Title" class="uui-form-element" required="required" />
+
+                    </div>
+                </div>
+
+                <!-- Select Multiple -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Categories</label>
+                    <div class="col-md-4">
+                        <select th:field="*{categories}" class="selectpicker uui-form-element" multiple="multiple" required="required">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Multiple -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Language</label>
+                    <div class="col-md-4">
+                        <select th:field="*{language.id}" class="selectpicker uui-form-element" required="required">
+                            <option th:each="language : ${languages}"
+                                    th:value="${language.id}"
+                                    th:text="${language.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Description</label>
+                    <div class="col-md-4">
+                        <textarea class="uui-form-element" rows="3" cols="20" th:field="*{description}" required="required">Write short description...</textarea>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Movie length</label>
+                    <div class="col-md-4">
+                        <input th:field="*{length}" type="text" placeholder="Length" class="uui-form-element" required="required" />
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Rating</label>
+                    <div class="col-md-4">
+                        <select th:field="*{rating}" class="btn-group selectpicker uui-form-element">
+                            <option th:each="rating : ${ratings}"
+                                    th:value="${rating}"
+                                    th:text="${rating.getRating()}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="title">Actors</label>
+                <div class="col-md-4">
+                    <div id="actorstag"></div>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <div class="col-md-4">
+                    <button class="uui-button blue" type="submit">Save</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $('#actorstag').magicSuggest({
+            data: /*[[ @{'/searchActors'} ]]*/,
+            name: 'actors',
+            allowFreeEntries: false,
+            method: 'get',
+            queryParam: 'name',
+            minChars: 2
+        });
+        /*]]>*/
+    </script>
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" layout:decorator="indexTemplate">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home page</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <br />
+        <h1>Welcome in Movies Rental!</h1>
+        In our Movie Rental you can choose among
+        <!--/*@thymesVar id="moviesCount" type="application.gui.home.HomeController"*/-->
+        <span th:text="${moviesCount}"></span> titles!
+    </div>
+</div>
+
+</body>
+</html>

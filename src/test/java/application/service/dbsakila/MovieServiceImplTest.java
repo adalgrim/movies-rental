@@ -1,9 +1,5 @@
 package application.service.dbsakila;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyLong;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 import application.MoviesRentalTest;
 import application.common.domain.Film;
 import application.common.domain.FilmSearchResult;
@@ -15,17 +11,21 @@ import application.integration.dbsakila.dao.LanguageRepository;
 import application.integration.dbsakila.entity.FilmEntity;
 import application.integration.dbsakila.entity.builder.FilmEntityBuilder;
 import application.integration.dbsakila.mapper.FilmMapper;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * MovieServiceImplTest.
@@ -40,7 +40,7 @@ public class MovieServiceImplTest extends MoviesRentalTest {
 
     private MovieService movieService;
 
-    @BeforeMethod
+    @Before
     public void setUp() {
         movieService = new MovieServiceImpl(filmRepository);
     }
@@ -68,7 +68,7 @@ public class MovieServiceImplTest extends MoviesRentalTest {
             Rating.R).withLength(100).withDescription("description").build();
         when(filmRepository.findOne(anyLong())).thenReturn(filmEntity);
 
-        assertThat(movieService.getMovie(1L)).isEqualToComparingFieldByField(FilmMapper.INSTANCE.FilmEntityToFilm(filmEntity));
+        assertThat(movieService.getMovie(1L)).isEqualToComparingFieldByField(FilmMapper.INSTANCE.filmEntityToFilm(filmEntity));
     }
 
     @Test

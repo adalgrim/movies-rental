@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -27,8 +28,22 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository
             .findAll()
             .stream()
-            .map(CategoryMapper.INSTANCE::CategoryEntityToCategory)
+            .map(CategoryMapper.INSTANCE::categoryEntityToCategory)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Category> findAll(Set<Long> ids) {
+        return categoryRepository
+            .findAll(ids)
+            .stream()
+            .map(CategoryMapper.INSTANCE::categoryEntityToCategory)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public Category findOne(Long id) {
+        return CategoryMapper.INSTANCE.categoryEntityToCategory(categoryRepository.findOne(id));
     }
 
 }

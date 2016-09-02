@@ -3,6 +3,8 @@ package application.common.domain;
 import application.common.types.Rating;
 
 /**
+ * DTO for movie search.
+ *
  * Created by Adam_Skowron on 23.08.2016.
  */
 public class FilmSearchResult {
