@@ -58,8 +58,7 @@ public class MovieController {
 
     @RequestMapping("/movies")
     String movies(Model model, Sort sort, Pageable pageable, MovieSearchParams movieSearchParams,
-                  @RequestParam
-                      Map<String, String> requestParams) {
+                  @RequestParam Map<String, String> requestParams) {
 
         PaginationHelper paginationHelper = new PaginationHelper(sort, requestParams, movieViewModel.getSortItems());
         PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), paginationHelper.parseSortParams());
