@@ -16,7 +16,7 @@ public class RatingConverter implements AttributeConverter<Rating, String> {
         if ( attribute == null ) {
             return null;
         }
-        return attribute.getRating();
+        return attribute.getRatingName();
     }
 
     @Override

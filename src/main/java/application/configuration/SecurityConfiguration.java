@@ -31,7 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //  http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/movies").hasRole("USER")
@@ -51,15 +50,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/");
     }
-
-    /*    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password("user").roles("USER");
-
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("USER", "ADMIN");
-    }*/
 
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordencoder() {

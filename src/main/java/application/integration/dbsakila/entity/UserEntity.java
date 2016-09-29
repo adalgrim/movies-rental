@@ -1,7 +1,7 @@
 package application.integration.dbsakila.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * UserEntity

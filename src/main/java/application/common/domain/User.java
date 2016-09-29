@@ -15,6 +15,7 @@ public class User {
 
     private int enabled;
 
+    /** Spring security needs it */
     public User() {
     }
 

@@ -1,13 +1,14 @@
 package application.integration.dbsakila.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Adam_Skowron on 02.09.2016.
  */
 @Entity
 @Table(name = "user_roles")
-public class UserRoleEntity {
+public class UserRoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

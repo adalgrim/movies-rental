@@ -10,13 +10,13 @@ public enum Rating {
     R("R"),
     NC17("NC-17");
 
-    private String rating;
+    private String ratingName;
 
     Rating(String rating) {
-        this.rating = rating;
+        this.ratingName = rating;
     }
 
-    public String getRating() {
-        return rating;
+    public String getRatingName() {
+        return ratingName;
     }
 }

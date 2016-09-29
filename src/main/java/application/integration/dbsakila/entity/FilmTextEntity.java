@@ -1,11 +1,7 @@
 package application.integration.dbsakila.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * Created by Adam_Skowron on 24.08.2016.

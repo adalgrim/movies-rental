@@ -63,8 +63,7 @@ public class MovieControllerIntegrationTest extends MoviesRentalTest {
     @Test
     @Ignore
     public void testMovies() throws Exception {
-
-
+        loginBefore();
         HttpStatus httpStatus = this.restTemplate.getForEntity("/movies", String.class).getStatusCode();
         assertThat(httpStatus).isEqualTo(HttpStatus.OK);
     }

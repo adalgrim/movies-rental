@@ -27,7 +27,7 @@ public class PageWrapper<T> {
     public PageWrapper(Page<T> page, String url) {
         this.page = page;
         this.url = url;
-        items = new ArrayList<PageItem>();
+        items = new ArrayList<>();
 
         currentNumber = page.getNumber() + 1; //start from 1 to match page
 
@@ -90,7 +90,7 @@ public class PageWrapper<T> {
         return page.hasNext();
     }
 
-    public class PageItem {
+    public static class PageItem {
 
         private int number;
         private boolean current;
